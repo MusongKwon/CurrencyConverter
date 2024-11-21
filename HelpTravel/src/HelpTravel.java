@@ -4,27 +4,28 @@ public class HelpTravel {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        /*System.out.print("name a country: ");
-        String countryName = scanner.nextLine();
-        String currency = CountryCurrencyMapper.getCurrencyCode(countryName);
-        System.out.print(currency);
-        scanner.close();*/
+        System.out.print("In which country do you currently reside: ");
+        String sourceCountryName = scanner.nextLine();
+        String validSource = CountryNameNormalizer.normalizeCountryName(sourceCountryName);
 
-        /*System.out.print("Where are you travelling to? ");
-        String countryName = scanner.nextLine();
+
+        System.out.print("Where are you travelling to? ");
+        String destCountryName = scanner.nextLine();
+        String validDest = CountryNameNormalizer.normalizeCountryName(destCountryName);
         TravelAdvisory Advisory = new TravelAdvisory();
-        String travelAdvisory = Advisory.getTravelAdvisory(countryName);
+        String travelAdvisory = Advisory.getTravelAdvisory(validDest);
         System.out.println(travelAdvisory);
-        scanner.close();*/
 
-        System.out.print("Source currency: ");
-        String sourceCurrency = scanner.next().toUpperCase();
-
-        System.out.print("Target currency: ");
-        String targetCurrency = scanner.next().toUpperCase();
-
-        System.out.print("Amount: ");
+        System.out.print("How much money will you bring: ");
         double amount = scanner.nextDouble();
+
+
+        // Use input to determine currency code
+        System.out.println("Converting currency of " + validSource + " to currency of " + validDest);
+        String sourceCurrency = CountryCurrencyMapper.getCurrencyCode(validSource);
+        String targetCurrency = CountryCurrencyMapper.getCurrencyCode(validDest);
+        System.out.println("Source: " + sourceCurrency + "\nTarget: " + targetCurrency);
+
 
         CurrencyConverter Converter = new CurrencyConverter();
         double exchangeRate = Converter.getExchangeRate(sourceCurrency, targetCurrency);
