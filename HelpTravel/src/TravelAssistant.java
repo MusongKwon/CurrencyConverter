@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,8 +9,10 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class TravelAssistant extends Application {
@@ -33,14 +36,14 @@ public class TravelAssistant extends Application {
     private Scene createHomeScene() {
         // welcoming users
         Label welcomeLabel = new Label("Welcome to TravelAssistant!");
-        welcomeLabel.setFont(new Font("Comic Sans MS", 24));
+        welcomeLabel.setFont(new Font("Comic Sans MS", 26));
         welcomeLabel.setTextFill(Color.rgb(50, 50, 50));
         welcomeLabel.setEffect(new DropShadow(10, Color.GRAY));
 
         // user input
         // asking user
         Label residenceLabel = new Label("Where do you currently reside?");
-        residenceLabel.setFont(new Font("Comic Sans MS", 16));
+        residenceLabel.setFont(new Font("Comic Sans MS", 18));
         residenceLabel.setTextFill(Color.rgb(100, 100, 100));
 
         // text field for user input
@@ -60,7 +63,13 @@ public class TravelAssistant extends Application {
         submitButton.setOnAction(e -> {
             String residence = residenceField.getText();
             String normalizedResidence = CountryNameNormalizer.normalizeCountryName(residence);
-            primaryStage.setScene(createDestinationScene(normalizedResidence));
+            System.out.println(normalizedResidence);
+            if (normalizedResidence.equals("unknown")) {
+                primaryStage.setScene(createHomeScene());
+            }
+            else {
+                primaryStage.setScene(createDestinationScene(normalizedResidence));
+            }
         });
 
         // arrangement of components
@@ -68,20 +77,29 @@ public class TravelAssistant extends Application {
         homeLayout.getChildren().addAll(welcomeLabel, residenceLabel, residenceField, submitButton);
         homeLayout.setAlignment(Pos.CENTER);
         homeLayout.setStyle("-fx-background-color: #f4f4f9; -fx-padding: 20;");
-        return new Scene(new StackPane(homeLayout), 1000, 750);
+        return new Scene(new StackPane(homeLayout), 1250, 900);
     }
 
     // second page for destination user input
     private Scene createDestinationScene(String normalizedResidence) {
         // label asking for user input
         Label destinationLabel = new Label("Where do you want to travel?");
-        destinationLabel.setFont(new Font("Comic Sans MS", 16));
+        destinationLabel.setFont(new Font("Comic Sans MS", 20));
         destinationLabel.setTextFill(Color.rgb(100, 100, 100));
 
         // interactive map
         ImageView mapView = new ImageView("World_location_map_(equirectangular_180).png");
-        mapView.setFitWidth(900);
+        mapView.setFitWidth(1100);
         mapView.setPreserveRatio(true);
+        Label mapLabel = new Label("World_location_map_(equirectangular_180) - Wikipedia");
+        mapLabel.setFont(new Font("Comic Sans MS", 12));
+        mapLabel.setTextFill(Color.rgb(100, 100, 100));
+        VBox mapPane = new VBox(5);
+        mapPane.getChildren().addAll(mapView, mapLabel);
+        mapPane.setAlignment(Pos.TOP_RIGHT);
+        HBox mapPaneWrapper = new HBox();
+        mapPaneWrapper.getChildren().add(mapPane);
+        mapPaneWrapper.setAlignment(Pos.CENTER);
 
         // action for clicking with mouse on the map
         mapView.setOnMouseClicked(event -> {
@@ -108,10 +126,10 @@ public class TravelAssistant extends Application {
 
         // arrangement of components
         VBox destinationLayout = new VBox(15);
-        destinationLayout.getChildren().addAll(destinationLabel, mapView, backButton);
+        destinationLayout.getChildren().addAll(destinationLabel, mapPaneWrapper, backButton);
         destinationLayout.setAlignment(Pos.CENTER);
         destinationLayout.setStyle("-fx-background-color: #f4f4f9; -fx-padding: 20;");
-        return new Scene(new StackPane(destinationLayout), 1000, 750);
+        return new Scene(new StackPane(destinationLayout), 1250, 900);
     }
 
     // third page to display information about destination
@@ -126,20 +144,20 @@ public class TravelAssistant extends Application {
 
         // labels for advisory message
         Label advisoryLabel = new Label("Travel Advisory for " + destination + ":");
-        advisoryLabel.setFont(new Font("Comic Sans MS", 18));
+        advisoryLabel.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
         Label messageLabel = new Label(advisoryMessage);
-        messageLabel.setFont(new Font("Comic Sans MS", 14));
+        messageLabel.setFont(new Font("Comic Sans MS", 16));
 
         // user input for amount of money
         Label moneyLabel = new Label("How much money do you plan to bring on this trip?");
-        moneyLabel.setFont(new Font("Comic Sans MS", 16));
+        moneyLabel.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 18));
         TextField moneyField = new TextField();
         moneyField.setPromptText("Enter amount");
         moneyField.setMaxWidth(200);
 
         // converted amount
         Label convertedAmountLabel = new Label();
-        convertedAmountLabel.setFont(new Font("Comic Sans MS", 14));
+        convertedAmountLabel.setFont(new Font("Comic Sans MS", 16));
         convertedAmountLabel.setTextFill(Color.rgb(50, 50, 50));
         moneyField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty() || !newValue.matches("\\d+(\\.\\d{1,2})?")) {
@@ -162,8 +180,9 @@ public class TravelAssistant extends Application {
         // arrangement of components
         VBox informationLayout = new VBox(15);
         informationLayout.getChildren().addAll(advisoryLabel, messageLabel, moneyLabel, moneyField, convertedAmountLabel, backButton);
+        VBox.setMargin(moneyLabel, new Insets(50, 0, 0, 0));
         informationLayout.setStyle("-fx-background-color: #f4f4f9; -fx-padding: 20;");
         informationLayout.setAlignment(Pos.CENTER);
-        return new Scene(informationLayout, 1000, 750);
+        return new Scene(informationLayout, 1250, 900);
     }
 }
