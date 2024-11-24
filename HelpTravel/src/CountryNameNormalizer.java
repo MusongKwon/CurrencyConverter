@@ -76,7 +76,7 @@ public class CountryNameNormalizer {
         nameMapping.put("bahrain", "Bahrain");
         nameMapping.put("burundi", "Burundi");
         nameMapping.put("benin", "Benin");
-        //nameMapping.put("", "Saint Barthélemy");
+        nameMapping.put("saint barthelemy", "Saint Barthélemy");
         nameMapping.put("bermuda", "Bermuda");
         nameMapping.put("brunei", "Brunei");
         nameMapping.put("bolivia", "Bolivia");
@@ -363,6 +363,7 @@ public class CountryNameNormalizer {
         nameMapping.put("ukraine", "Ukraine");
         nameMapping.put("uganda", "Uganda");
         nameMapping.put("united states", "United States");
+        nameMapping.put("us", "United States");
         nameMapping.put("usa", "United States");
         nameMapping.put("united states of america", "United States");
         nameMapping.put("america", "United States");
