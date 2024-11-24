@@ -1,6 +1,10 @@
 import java.util.HashMap;
 
 public class CountryCurrencyMapper {
+    public static String getCurrencyCode(String countryName) {
+        return nameToCurrency.getOrDefault(countryName, "unknown");
+    }
+
     private static final HashMap<String, String> nameToCurrency;
     static {
         nameToCurrency = new HashMap<>();
@@ -27,7 +31,7 @@ public class CountryCurrencyMapper {
         nameToCurrency.put("Bahrain", "BHD");
         nameToCurrency.put("Burundi", "BIF");
         nameToCurrency.put("Benin", "XOF");
-        //nameToCurrency.put("Saint Barthélemy", "EUR");
+        nameToCurrency.put("Saint Barthélemy", "EUR");
         nameToCurrency.put("Bermuda", "BMD");
         nameToCurrency.put("Brunei", "BND");
         nameToCurrency.put("Bolivia", "BOB");
@@ -203,7 +207,7 @@ public class CountryCurrencyMapper {
         nameToCurrency.put("Senegal", "XOF");
         nameToCurrency.put("Somalia", "SOS");
         nameToCurrency.put("Suriname", "SRD");
-        //nameToCurrency.put("South Sudan", "SSP");
+        nameToCurrency.put("South Sudan", "SDG");
         nameToCurrency.put("Sao Tome and Principe", "STD");
         nameToCurrency.put("El Salvador", "USD");
         nameToCurrency.put("Syria", "SYP");
@@ -242,9 +246,5 @@ public class CountryCurrencyMapper {
         nameToCurrency.put("South Africa", "ZAR");
         nameToCurrency.put("Zambia", "ZMW");
         nameToCurrency.put("Zimbabwe", "ZWL");
-    }
-
-    public static String getCurrencyCode(String countryName) {
-        return nameToCurrency.getOrDefault(countryName, "unknown");
     }
 }
