@@ -6,7 +6,7 @@ import java.net.URL;
 public class CurrencyConverter {
     public double getExchangeRate(String sourceCurrency, String targetCurrency) {
         // url for api
-        String urlString = "http://api.currencylayer.com/live?access_key=2af5d6f6a2a528eb8085e9e52aab24b9";
+        String urlString = "http://api.currencylayer.com/live?access_key=d9f9bf05382c72723495e02c4f6beb6b";
 
         try {
             // using the api url to access the JSON file with exchange rates
