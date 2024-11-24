@@ -26,9 +26,9 @@ public class CurrencyConverter {
                 response.append(line);
             }
             reader.close();
+            String responseText = response.toString();
 
             // using the string to get rates
-            String responseText = response.toString();
             return calculateRate(responseText, sourceCurrency, targetCurrency);
 
         }
